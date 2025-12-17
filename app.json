@@ -36,6 +36,14 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "gbb_reactnative_food-delivery",
+          "organization": "gbb-ib"
+        }
       ]
     ],
     "experiments": {
