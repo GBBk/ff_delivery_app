@@ -14,11 +14,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const Search = () => {
   const { category, query } = useLocalSearchParams<{ query: string; category: string }>()
 
-  const { data, refetch, loading } = useAppwrite({ fn: getMenu, params: { category, query, limit: 6 }})
+  const { data, refetch, loading } = useAppwrite({ fn: getMenu, params: { category, query }})
   const { data: categories } = useAppwrite({ fn: getCategories })
 
   useEffect(() => {
-    refetch({ category, query, limit: 6 })
+    refetch({ category, query})
   }, [category, query])
 
   return (
