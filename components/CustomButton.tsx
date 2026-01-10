@@ -1,6 +1,5 @@
 import { CustomButtonProps } from '@/type'
 import cn from 'clsx'
-import { router } from 'expo-router'
 import React from 'react'
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 
@@ -13,7 +12,7 @@ const CustomButton = ({
     isLoading=false
 }: CustomButtonProps) => {
   return (
-    <TouchableOpacity className={cn("custom-btn", style)} onPress={()=> router.push("/cart")}>
+    <TouchableOpacity className={cn("custom-btn", style)} onPress={onPress}>
         {leftIcon}
         <View className='flex-center flex-row'>
             {isLoading ? (

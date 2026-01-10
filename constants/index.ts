@@ -73,19 +73,19 @@ export const offers = [
     },
     {
         id: 2,
-        title: "BURGER",
+        title: "BURGERS",
         image: burgerTwo,
         color: "#DF5A0C",
     },
     {
         id: 3,
-        title: "PIZZA",
+        title: "PIZZAS",
         image: pizzaOne,
         color: "#084137",
     },
     {
         id: 4,
-        title: "BURRITO",
+        title: "BURRITOS",
         image: burrito,
         color: "#EB920C",
     },

@@ -13,7 +13,7 @@ const CustomInput = ({placeholder = "Enter text",
     const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <View className='w-full'>
+    <View className='w-10/12'>
       <Text className='label'>{label}</Text>
       <TextInput
         autoCapitalize='none'

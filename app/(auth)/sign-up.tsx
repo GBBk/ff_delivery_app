@@ -31,7 +31,6 @@ const SignUp = () => {
         password
       }) 
 
-      
 
       router.replace("/")
     } catch (error: any) {

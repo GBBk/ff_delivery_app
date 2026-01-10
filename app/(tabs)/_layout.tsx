@@ -19,6 +19,7 @@ const TabLayout = () => {
     const { isAuthenticated } = useAuthStore();
 
     if (!isAuthenticated) return <Redirect href="/sign-in"/> 
+    
   return (
   <Tabs
     screenOptions={{

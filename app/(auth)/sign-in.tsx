@@ -21,14 +21,13 @@ const SignIn = () => {
     setIsSubmitting(true)
 
     try {
-      // Call Appwrite Sign In function
       await signIn({
         email,
         password
       })
 
 
-      router.replace("/")
+      router.replace("/");
     } catch (error: any) {
       Alert.alert("Error", error.message || "Something went wrong during sign in.");
     } finally {

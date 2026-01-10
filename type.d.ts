@@ -105,3 +105,8 @@ interface GetMenuParams {
     category: string;
     query: string;
 }
+
+interface UserProfileUpdate extends User {
+    address?: string;
+    phone?: string;
+}
