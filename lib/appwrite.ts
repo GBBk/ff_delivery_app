@@ -1,5 +1,6 @@
-import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
+import { Category, CreateUserParams, GetMenuParams, SignInParams } from "@/type";
 import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
+import { getErrorMessage } from "./errors";
 
 export const appwriteConfig = {
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
@@ -68,7 +69,7 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
 
     return true;
   } catch (error) {
-    throw new Error(error as string);
+    throw new Error(getErrorMessage(error));
   }
 };
 
@@ -80,7 +81,7 @@ export const signIn = async ({email, password}: SignInParams) => {
             password
         )
     } catch (error) {
-        throw new Error(error as string)
+        throw new Error(getErrorMessage(error))
     }
 }
 
@@ -88,7 +89,7 @@ export const logout = async () => {
   try {
     await account.deleteSession("current");
   } catch (error) {
-    throw new Error(error as string);
+    throw new Error(getErrorMessage(error));
   }
 };
 
@@ -106,10 +107,9 @@ export const getCurrentUser = async () => {
             ]
         )
         if(!currentUser) throw Error("User not found");
-        console.log(currentUser.documents[0]);
         return currentUser.documents[0];
     } catch (error) {
-        throw new Error(error as string)
+        throw new Error(getErrorMessage(error))
     }
 }
 
@@ -134,24 +134,24 @@ export const getMenu = async ({category, query}: GetMenuParams) => {
         return menus.documents;
 
     } catch (error) {
-        throw new Error(error as string)
+        throw new Error(getErrorMessage(error))
     }
 }
 
 export const getCategories = async () => {
     try {
-        const categories = await databases.listDocuments(
+        const categories = await databases.listDocuments<Category>(
             appwriteConfig.databaseId,
             appwriteConfig.categoriesCollectionId
         );
 
         return categories.documents;
     } catch (error) {
-        throw new Error(error as string)
+        throw new Error(getErrorMessage(error))
     }
 }
 
-export const updateProfile = async (data: {[key: string]: any}) => {
+export const updateProfile = async (data: { phone?: string; address?: string }) => {
     try {
         const currentUser = await getCurrentUser();
         if(!currentUser) throw Error("User not found");
@@ -163,7 +163,7 @@ export const updateProfile = async (data: {[key: string]: any}) => {
         );
         return updatedUser;
     } catch (error) {
-        throw new Error(error as string)
+        throw new Error(getErrorMessage(error))
     }
 }
 
@@ -199,6 +199,6 @@ export const getFullUser = async () => {
       address: profile.address ?? "",
     };
   } catch (error) {
-    throw new Error(error as string);
+    throw new Error(getErrorMessage(error));
   };
 }
