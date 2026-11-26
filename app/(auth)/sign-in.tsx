@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/lib/errors'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { signIn } from '@/lib/appwrite'
@@ -28,8 +29,8 @@ const SignIn = () => {
 
 
       router.replace("/");
-    } catch (error: any) {
-      Alert.alert("Error", error.message || "Something went wrong during sign in.");
+    } catch (error) {
+      Alert.alert("Error", getErrorMessage(error, "Something went wrong during sign in."));
     } finally {
       setIsSubmitting(false)
     }
@@ -60,7 +61,7 @@ const SignIn = () => {
 
         <View className='flex justify-center mt-5 flex-row gap-2'>
           <Text className='base-regular text-gray-100'>
-            Don't have an account?
+            Don&apos;t have an account?
           </Text>
           <Link href="/sign-up" className='base-bold text-primary'>
             Sign Up

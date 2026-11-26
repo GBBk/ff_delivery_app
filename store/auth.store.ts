@@ -30,8 +30,8 @@ const useAuthStore = create<AuthState>((set) => ({
 
             if (user) set({ isAuthenticated: true, user: user as unknown as User });
             else set({ isAuthenticated: false, user: null });
-        } catch (error) {
-            console.log('Error fetching authenticated user:', error);
+        } catch {
+            // Sin sesión activa: es el estado normal al abrir la app por primera vez.
             set({ isAuthenticated: false, user: null });
         } finally {
             set({ isLoading: false });

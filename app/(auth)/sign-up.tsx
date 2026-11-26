@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/lib/errors'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { createUser } from '@/lib/appwrite'
@@ -33,8 +34,8 @@ const SignUp = () => {
 
 
       router.replace("/")
-    } catch (error: any) {
-      Alert.alert("Error", error.message || "Something went wrong during sign up.");
+    } catch (error) {
+      Alert.alert("Error", getErrorMessage(error, "Something went wrong during sign up."));
     } finally {
       setIsSubmitting(false)
     }

@@ -1,50 +1,73 @@
-# Welcome to your Expo app 👋
+# FF Delivery
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App móvil de delivery de comida hecha con **React Native y Expo**. Permite registrarse, buscar y filtrar el menú por categoría, armar el carrito con extras (toppings, guarniciones) y editar el perfil. Funciona en Android, iOS y web.
 
-## Get started
+**Demo:** _próximamente_
 
-1. Install dependencies
+<!-- Agregá capturas del celular, una al lado de la otra:
+<p>
+  <img src="docs/home.png" width="200" />
+  <img src="docs/search.png" width="200" />
+  <img src="docs/cart.png" width="200" />
+</p>
+-->
 
-   ```bash
-   npm install
-   ```
+## Funcionalidades
 
-2. Start the app
+- Registro e inicio de sesión con Appwrite Auth; rutas protegidas con Expo Router.
+- Menú con búsqueda (con debounce) y filtro por categoría, leído de Appwrite Database.
+- Carrito con extras: el mismo producto con extras distintos se guarda como una línea aparte, y el total incluye el precio de cada extra.
+- Perfil editable (teléfono y dirección).
+- Monitoreo de errores en producción con Sentry.
 
-   ```bash
-   npx expo start
-   ```
+## Stack
 
-In the output, you'll find options to open the app in a
+| Capa | Tecnologías |
+| --- | --- |
+| App | React Native 0.81, Expo SDK 54, Expo Router, TypeScript |
+| UI | NativeWind (Tailwind CSS para React Native) |
+| Estado | Zustand (carrito y sesión) |
+| Backend | Appwrite (Auth, Database, Storage) |
+| Calidad | ESLint, Jest (jest-expo), Sentry, GitHub Actions |
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Estructura
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+app/
+  (auth)/        pantallas de login y registro
+  (tabs)/        inicio, búsqueda, carrito y perfil
+components/      tarjetas del menú, filtro, buscador, inputs
+store/           stores de Zustand: carrito y sesión
+lib/             cliente de Appwrite, hook useAppwrite, datos de ejemplo y seed
+__tests__/       tests de la lógica del carrito y del manejo de errores
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Correrlo localmente
 
-## Learn more
+Requisitos: Node 20 o superior, la app Expo Go en el celular (o un emulador) y un proyecto de Appwrite.
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+git clone https://github.com/GBBk/ff_delivery_app.git
+cd ff_delivery_app
+npm install
+cp .env.example .env   # completar endpoint y project ID de Appwrite
+npx expo start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Escaneá el QR con Expo Go, o presioná `a` (Android), `i` (iOS) o `w` (web).
 
-## Join the community
+Los IDs de la base y las colecciones están en `lib/appwrite.ts`. Con un proyecto de Appwrite nuevo, creá las colecciones y cargá el menú de ejemplo con la función `seed` de `lib/seed.ts`.
 
-Join our community of developers creating universal apps.
+## Scripts
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Comando | Qué hace |
+| --- | --- |
+| `npx expo start` | Servidor de desarrollo |
+| `npm run lint` | ESLint |
+| `npm test` | Tests con Jest |
+
+## Próximas mejoras
+
+- Checkout: guardar pedidos en Appwrite y mostrar el historial en el perfil.
+- Pago de prueba con Stripe en modo test.
+- Build instalable con EAS Build (APK en Releases).

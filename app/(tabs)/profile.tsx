@@ -3,13 +3,12 @@ import CustomProfileInput from '@/components/CustomProfileInput'
 import { images } from '@/constants'
 import { getFullUser, logout, updateProfile } from '@/lib/appwrite'
 import useAppwrite from '@/lib/useAppwrite'
+import { getErrorMessage } from '@/lib/errors'
 import useAuthStore from '@/store/auth.store'
 import { router } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Alert, Image, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
-const VIEWCLASSNAME = 'w-11/12 flex-row gap-2 items-center'
 
 const Profile = () => {
   const { data } = useAppwrite({fn: getFullUser})
@@ -29,7 +28,7 @@ const Profile = () => {
       })
       Alert.alert("Success", "Profile updated successfully");
     } catch (error) {
-      console.log("Error updating profile:", error);
+      Alert.alert("Error", getErrorMessage(error, "Could not update your profile."));
     }
   }
 
@@ -39,7 +38,7 @@ const Profile = () => {
     setIsAuthenticated(false);
     router.replace("/sign-in");
   } catch (error) {
-    console.log("Error:", error);
+    Alert.alert("Error", getErrorMessage(error, "Could not log out."));
   }
 };
 
