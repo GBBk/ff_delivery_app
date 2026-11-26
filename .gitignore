@@ -43,3 +43,7 @@ app-example
 /android
 
 .env.local
+
+# Variables de entorno
+.env
+!.env.example
